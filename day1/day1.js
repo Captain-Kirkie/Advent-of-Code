@@ -1,4 +1,3 @@
-const { CallTracker } = require("assert");
 const fs = require("fs");
 
 function readData(path) {
