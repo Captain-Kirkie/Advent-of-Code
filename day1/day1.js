@@ -1,15 +1,4 @@
-const fs = require("fs");
-
-function readData(path) {
-    let data;
-    try {
-        data = fs.readFileSync(path, "utf8");
-    } catch (err) {
-        console.error(err);
-    }
-    return data;
-}
-
+const { readData } = require("../readData.js");
 const data = readData("./calories.txt");
 
 const calculateMax = (data) => {
