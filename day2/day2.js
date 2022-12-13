@@ -18,23 +18,25 @@ const actions = {
     Scissors: "scissors",
 };
 // rock 1, 2 paper, 3 scissors
-const yourMove = {
-    A: { action: actions.Rock, score: 1 },
-    B: { action: actions.Paper, score: 2 },
-    C: { action: actions.Scissors, score: 3 },
+const response = {
+    A: { action: actions.Rock, score: null },
+    B: { action: actions.Paper, score: null },
+    C: { action: actions.Scissors, score: null },
 };
 
-const response = {
-    X: { action: actions.Rock, score: null },
-    Y: { action: actions.Paper, score: null },
-    Z: { action: actions.Scissors, score: null },
+const yourMove = {
+    X: { action: actions.Rock, score: 1 },
+    Y: { action: actions.Paper, score: 2 },
+    Z: { action: actions.Scissors, score: 3 },
 };
 
 const result = {
-    win: 6,
-    lose: 0,
-    draw: 3,
+    win: "win",
+    lose: "lose",
+    draw: "draw",
 };
+
+const resultVal = { win: 6, lose: 0, draw: 3 };
 
 function rockPaperScissors(you, them) {
     // paper beats rock
@@ -61,15 +63,18 @@ let sum = 0;
 for (let game of data) {
     game = game.split(" ");
 
-    const me = game[0];
-    const them = game[1];
+    const them = game[0];
+    const me = game[1];
 
     const result = rockPaperScissors(
         yourMove[me].action,
         response[them].action
     );
-    sum += result + yourMove[me].score;
+
+
+    sum += resultVal[result] + yourMove[me].score;
     console.log(`me ${me}, them ${them}, result ${result}`);
+    // if(sum > 100) break;
 }
 
 console.log(`sum: ${sum}`);
