@@ -12,23 +12,64 @@
 
 const { readData } = require("../readData.js");
 
-const data = readData("./strategyGuide.txt");
-console.log(data);
-
 const actions = {
     Rock: "rock",
     Paper: "paper",
     Scissors: "scissors",
 };
-
+// rock 1, 2 paper, 3 scissors
 const yourMove = {
-    A: actions.Rock,
-    B: actions.Paper,
-    C: actions.Scissors,
+    A: { action: actions.Rock, score: 1 },
+    B: { action: actions.Paper, score: 2 },
+    C: { action: actions.Scissors, score: 3 },
 };
 
 const response = {
-    X: actions.Rock,
-    Y: actions.Paper,
-    Z: actions.Scissors,
+    X: { action: actions.Rock, score: null },
+    Y: { action: actions.Paper, score: null },
+    Z: { action: actions.Scissors, score: null },
 };
+
+const result = {
+    win: 6,
+    lose: 0,
+    draw: 3,
+};
+
+function rockPaperScissors(you, them) {
+    // paper beats rock
+    // rock beats scissors
+    // scissors beats paper
+    if (you == them) return result.draw; // if they are the same it is a draw
+
+    if (you === actions.Paper) {
+        // if you are paper, they lose if they are rock, win if they are scissors
+        return them == actions.Rock ? result.win : result.lose;
+    } else if (you === actions.Rock) {
+        // if you are rock, they lose if they are scissors, win if they are paper
+        return them == actions.Scissors ? result.win : result.lose;
+    } else if (you == actions.Scissors) {
+        // if you are scissor, they lose if they are paper, win if they are rock
+        return them == actions.Paper ? result.win : result.lose;
+    }
+    return null; // should be unreachable
+}
+const data = readData("./strategyGuide.txt")
+    .split("\n")
+    .filter((d) => !!d);
+let sum = 0;
+for (let game of data) {
+    game = game.split(" ");
+
+    const me = game[0];
+    const them = game[1];
+
+    const result = rockPaperScissors(
+        yourMove[me].action,
+        response[them].action
+    );
+    sum += result + yourMove[me].score;
+    console.log(`me ${me}, them ${them}, result ${result}`);
+}
+
+console.log(`sum: ${sum}`);
