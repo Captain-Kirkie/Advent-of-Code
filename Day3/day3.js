@@ -1,7 +1,6 @@
 const { readData } = require("../readData.js");
 
 const data = readData("./contents.txt");
-// console.log(data);
 
 const makeAlphabetPriority = () => {
     const alpha = Array.from(Array(26)).map((e, i) => i + 65);
@@ -32,8 +31,6 @@ function findInersecionNaive(a, b) {
 }
 
 function part1() {
-    const priority = makeAlphabetPriority();
-    console.log(priority);
     const ruckSacks = data.split("\n").filter((f) => !!f);
     let sum = 0;
     for (let ruckSack of ruckSacks) {
@@ -46,4 +43,44 @@ function part1() {
     return sum;
 }
 
-console.log(`part 1 ${part1()}`);
+function findCommon(vals) {
+    let map = new Map();
+    for (const val of vals) {
+        for (const i of val) {
+            map.set(i, map.get(i) ?? 1);
+        }
+    }
+
+    for (let [key, value] of map) {
+        console.log(key + " = " + value);
+        if (value >= vals.length) {
+            return value;
+        }
+    }
+}
+
+const splitIntoGroupsof3 = (elvs) => {
+    let i = 0;
+    
+    while(i < elvs.length) {
+        if(i % 3 == 0) console.log(i);
+    }
+
+}
+function part2() {
+    const elvs = data.split("\n").filter((f) => !!f);
+    let groups = [];
+    for(let i = 0; i < elvs.length; i+=3) {
+        let group = [];
+        for(let j = i; j < i + 3; j++) {
+            group.push(elvs[j]);
+        }
+        groups.push(group);;
+    }
+    console.log(groups);
+}
+
+const priority = makeAlphabetPriority();
+// console.log(`part 1 ${part1()}`);
+
+part2()
