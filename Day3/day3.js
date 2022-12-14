@@ -43,44 +43,57 @@ function part1() {
     return sum;
 }
 
+
+function removeDuplicatest(elv) {
+    let set = new Set();
+    for(let i of elv) set.add(i);
+    return set.values();
+}
+
 function findCommon(vals) {
     let map = new Map();
-    for (const val of vals) {
+    for (let val of vals) {
+        val = removeDuplicatest(val);
         for (const i of val) {
-            map.set(i, map.get(i) ?? 1);
+            let val = (!! (map.get(i)) ? map.get(i) : 0) + 1;
+            map.set(i, val);
         }
     }
-
+    console.log(map);
+    console.log(vals);
     for (let [key, value] of map) {
         console.log(key + " = " + value);
         if (value >= vals.length) {
-            return value;
+            return key;
         }
     }
+    return null;
 }
 
 const splitIntoGroupsof3 = (elvs) => {
-    let i = 0;
-    
-    while(i < elvs.length) {
-        if(i % 3 == 0) console.log(i);
-    }
-
-}
-function part2() {
-    const elvs = data.split("\n").filter((f) => !!f);
     let groups = [];
-    for(let i = 0; i < elvs.length; i+=3) {
+    for (let i = 0; i < elvs.length; i += 3) {
         let group = [];
-        for(let j = i; j < i + 3; j++) {
+        for (let j = i; j < i + 3; j++) {
             group.push(elvs[j]);
         }
-        groups.push(group);;
+        groups.push(group);
     }
-    console.log(groups);
+    return groups;
+};
+
+function part2() {
+    const elvs = data.split("\n").filter((f) => !!f);
+    let groups = splitIntoGroupsof3(elvs);
+    let sum = 0;
+    for(let group of groups) {
+       let common = findCommon(group);
+       sum += priority.get(common);
+    }
+    return sum;
 }
 
 const priority = makeAlphabetPriority();
 // console.log(`part 1 ${part1()}`);
 
-part2()
+console.log(`part 2 ${part2()}`);
