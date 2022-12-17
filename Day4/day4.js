@@ -75,5 +75,5 @@ const part2 = (data) => {
     }
     return count;
 };
-// console.log(`count ${part1(data)}`);
-console.log(`count ${part2(data)}`);
+console.log(`count part1 ${part1(data)}`);
+console.log(`count part2 ${part2(data)}`);
