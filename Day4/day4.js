@@ -11,7 +11,7 @@ function doesOverlap(elf1, elf2, func) {
             ? pair1
             : pair2;
 
-    console.log(`larger is pair1 ${pair1}, ${pair1 === larger}`);
+    // console.log(`larger is pair1 ${pair1}, ${pair1 === larger}`);
 
     const smaller = larger === pair1 ? pair2 : pair1;
 
@@ -41,4 +41,39 @@ const part1 = (data) => {
     return count;
 };
 
-console.log(`count ${part1(data)}`);
+/* 
+2-4,6-8 // not at all
+2-3,4-5 // not at all
+5-7,7-9 // 7 overlaps
+2-8,3-7 // overlaps
+6-6,4-6 // overlaps
+2-6,4-8 // overlaps
+*/
+
+const overlapsAtAll = (larger, smaller) => {
+    const highLarge = Math.max(larger[0], larger[1]);
+    const lowLarge = Math.min(larger[0], larger[1]);
+    const lowSmall = Math.min(smaller[0], smaller[1]);
+    const highSmall = Math.max(smaller[0], smaller[1]);
+
+    const overlaps =
+        (lowSmall >= lowLarge && lowSmall <= highLarge) ||
+        (highSmall >= lowLarge && highSmall <= highLarge);
+
+    return overlaps;
+};
+const part2 = (data) => {
+    data = data.split("\n").filter((d) => !!d);
+    let count = 0;
+    for (let line of data) {
+        const pairs = line.split(",");
+        const elf1 = pairs[0];
+        const elf2 = pairs[1];
+        if (doesOverlap(elf1, elf2, overlapsAtAll)) {
+            count++;
+        }
+    }
+    return count;
+};
+// console.log(`count ${part1(data)}`);
+console.log(`count ${part2(data)}`);
